@@ -1,0 +1,9 @@
+Important Points:-
+
+1) This authentication system uses Passport for authentication
+2) The bcrypt hashing algorithm is used to encrypt user passwords
+3) Registration Fields: First Name, Last Name, Email, Password & Confirm Password
+4) Login Fields: Email & Password
+5) Protected routes: Account Page, Account Details Page, Logout & Delete Account Routes
+6) Number of GET routes: 8
+7) Number of POST routes: 4
