@@ -1,0 +1,20 @@
+<%- include('partials/header'); -%>
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    <h1 class="mt-4">Dashboard</h1>
+  <%- include("partials/messages"); -%>
+  <p class="lead mb-3">Welcome User!</p>  <!-- Displays user's name -->
+  <a href="/account/logout" class="btn btn-secondary">Logout</a>
+  <a href="/account/delete" class="btn btn-dark">Close Account</a>
+
+  </body>
+</html>
+
+<%- include('partials/footer'); -%>

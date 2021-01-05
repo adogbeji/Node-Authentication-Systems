@@ -60,7 +60,6 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const User = require('./models/user');
 
-// For Next Time: Start final test on update route, then upload to GitHub!
 
 const getHomePage = (req, res) => {
   res.render('home');

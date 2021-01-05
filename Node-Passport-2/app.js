@@ -56,7 +56,37 @@ mongoose.connect(DB, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const User = require('./models/user-model');
 
-// For Next Time: Start building web pages!
+// For Next Time: Create partials in messages.ejs & start building register POST route!
+
+app.get('/', (req, res) => {
+  res.render('home');
+});
+
+app.get('/account', (req, res) => {
+  res.render('account');
+});
+
+app.get('/account/register', (req, res) => {
+  res.render('register');
+});
+
+app.get('/account/login', (req, res) => {
+  res.render('login');
+});
+
+app.get('/account/details', (req, res) => {
+  res.render('update');
+});
+
+app.get('/account/details/login', (req, res) => {
+  res.render('update-login');
+});
+
+app.get('/account/logout', (req, res) => {
+  req.logout();
+  req.flash('success_msg', 'You are now logged out!');
+  res.redirect('/account/login');
+});
 
 const port = process.env.PORT;
 
