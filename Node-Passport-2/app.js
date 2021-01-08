@@ -56,7 +56,7 @@ mongoose.connect(DB, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const User = require('./models/user-model');
 
-// For Next Time: Create partials in messages.ejs & start building register POST route!
+// For Next Time: Start testing register POST route!
 
 app.get('/', (req, res) => {
   res.render('home');
@@ -86,6 +86,71 @@ app.get('/account/logout', (req, res) => {
   req.logout();
   req.flash('success_msg', 'You are now logged out!');
   res.redirect('/account/login');
+});
+
+app.post('/account/register', (req, res) => {
+  const { name, email, password1, password2 } = req.body;
+  let errors = [];  // Holds error message objects
+
+  // Check for missing fields
+  if (!name || !email || !password1 || !password2) {
+    errors.push({
+      message: 'Please fill out all the fields!'
+    });
+  }
+
+  // Check that passwords match
+  if (password1 !== password2) {
+    errors.push({
+      message: 'Passwords don\'t match!'
+    });
+  }
+
+  // Check password length
+  if (password1.length < 6) {
+    errors.push({
+      message: 'Password should be AT LEAST 6 characters!'
+    });
+  }
+
+  // Page will be re-rendered if any validaton checks fail
+  if (errors.length > 0) {
+    res.render('register', {
+      errors, name, email, password1, password2
+    });
+  } else {
+    // Validation Passed
+    User.findOne({email: email})
+    .then(user => {
+      // If user exists
+      if (user) {
+        errors.push({message: 'That email is already registered!'});
+        res.render('register', {
+          name, email, password1, password2
+        });
+      } else {
+        // If user doesn't exist, create one & save. Mongoose Encryption will automatically encrypt user password...
+        const newUser = new User({
+          name,
+          email,
+          password: password1
+        });
+
+        // Save user
+        newUser.save()
+        .then(user => {
+          req.flash('success_msg', 'You have now been registered!');
+          res.redirect('/account/login');
+        });
+      }
+    })
+    .catch(err => {
+      errors.push({message: 'An error occcurred, please try again!'});
+      res.render('register', {
+        name, email, password1, password2
+      });
+    });
+  }
 });
 
 const port = process.env.PORT;
