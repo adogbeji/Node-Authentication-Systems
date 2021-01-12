@@ -10,6 +10,9 @@ const passport = require('passport');
 const passportLocal = require('passport-local');
 const flash = require('connect-flash');
 
+// Protecting RESTRICTED Pages
+const { ensureAuthenticated_1, ensureAuthenticated_2, ensureAuthenticated_3 } = require('./config/auth');
+
 const app = express();
 app.set('view engine', 'ejs');
 
@@ -56,14 +59,15 @@ mongoose.connect(DB, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const User = require('./models/user-model');
 
-// For Next Time: Start testing register POST route!
+// For Next Time: Start building Account Details & Account Details Login POST routes!
 
 app.get('/', (req, res) => {
   res.render('home');
 });
 
-app.get('/account', (req, res) => {
-  res.render('account');
+app.get('/account', ensureAuthenticated_1, (req, res) => {
+  const clientName = req.user.name;  /* 'req.user' contains authenticated user */
+  res.render('account', {name: clientName});
 });
 
 app.get('/account/register', (req, res) => {
@@ -74,7 +78,7 @@ app.get('/account/login', (req, res) => {
   res.render('login');
 });
 
-app.get('/account/details', (req, res) => {
+app.get('/account/details', ensureAuthenticated_2, (req, res) => {
   res.render('update');
 });
 
@@ -82,10 +86,27 @@ app.get('/account/details/login', (req, res) => {
   res.render('update-login');
 });
 
-app.get('/account/logout', (req, res) => {
+app.get('/account/logout', ensureAuthenticated_3, (req, res) => {
   req.logout();
   req.flash('success_msg', 'You are now logged out!');
   res.redirect('/account/login');
+});
+
+app.get('/account/delete', ensureAuthenticated_3, (req, res) => {
+  let errors = [];
+
+  User.deleteOne({name: req.user.name})
+  .then(noAccount => {
+    if (noAccount) {
+      req.flash('success_msg', 'Your account has now been closed!');
+      res.redirect('/account/register');
+    }
+  })
+  .catch(err => {
+    errors.push({
+      message: 'An error occurred, please try again!'
+    });
+  });
 });
 
 app.post('/account/register', (req, res) => {
@@ -151,6 +172,14 @@ app.post('/account/register', (req, res) => {
       });
     });
   }
+});
+
+app.post('/account/login', (req, res, next) => {
+  passport.authenticate('local', {
+    successRedirect: '/account',
+    failureRedirect: '/account/login',
+    failureFlash: true
+  })(req, res, next);
 });
 
 const port = process.env.PORT;
