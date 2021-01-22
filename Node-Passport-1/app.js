@@ -1,3 +1,4 @@
+
 // jshint esversion:6
 
 require('dotenv').config({path: './config.env'});
@@ -60,6 +61,7 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const User = require('./models/user');
 
+// For Next Time: Check Update route again(Name & Email), then carry on testing...
 
 const getHomePage = (req, res) => {
   res.render('home');
@@ -183,7 +185,7 @@ const createAccount = (req, res) => {
 };
 
 const accountLogin = (req, res, next) => {
-  passport.authenticate("local", {
+  passport.authenticate('local', {
     successRedirect: '/account',
     failureRedirect: '/account/login',
     failureFlash: true
@@ -191,18 +193,18 @@ const accountLogin = (req, res, next) => {
 };
 
 const updateAccountDetails = (req, res) => {
-  const {name, email, password} = req.body;
-  let errors = [];
-  let success = [];
+  const { name, email, password } = req.body;
+  let errors = [];  // Holds error message objects
+  let success = [];  // Holds success message objects
 
-  //Check for missing fields
+  // Check for missing fields
   if (!name && !email && !password) {
     errors.push({
       message: 'Please update at least ONE field below!'
     });
   }
 
-  //Page will be re-rendered if validation fails
+  // Page will be re-rendered if validation fails
   if (errors.length > 0) {
     res.render('update', {errors});
   }
@@ -243,7 +245,7 @@ const updateAccountDetails = (req, res) => {
 
 
   // Check for Name & Email - WORKS
- if (name !== "" && email !== "") {
+ if (name !== '' && email !== '') {
    return User.findOne({name: req.user.name}, (err, user) => {
      if (!err) {
        // Update fields of returned user
@@ -254,15 +256,15 @@ const updateAccountDetails = (req, res) => {
        user.save()
        .then(user => {
          success.push({
-           message: "Name and Email have been updated!"
+           message: 'Name and Email have been updated!'
          });
-         return res.render("update", {success, name, email});
+         return res.render('update', {success, name, email});
        });
      } else {
        errors.push({
-         message: "An error occurred, please try again!"
+         message: 'An error occurred, please try again!'
        });
-       res.render("update", {errors});
+       res.render('update', {errors});
      }
    });
 }

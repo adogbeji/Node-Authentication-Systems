@@ -1,6 +1,9 @@
 # Config File
 config.env
 
+# MongoDB URI Connection String
+keys.js
+
 # Logs
 logs
 *.log

@@ -1,3 +1,4 @@
+
 // jshint esversion:6
 
 require('dotenv').config({path: './config.env'});
@@ -59,7 +60,7 @@ mongoose.connect(DB, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const User = require('./models/user-model');
 
-// For Next Time: Start building Account Details & Account Details Login POST routes!
+// For Next Time: Start building Account Details & Account Details Login POST route!
 
 app.get('/', (req, res) => {
   res.render('home');
@@ -180,6 +181,51 @@ app.post('/account/login', (req, res, next) => {
     failureRedirect: '/account/login',
     failureFlash: true
   })(req, res, next);
+});
+
+app.post('/account/details', (req, res) => {
+  const { name, email, password } = req.body;
+  let errors = [];  // Holds error message objects
+  let success = []; // Holds succes message objects
+
+
+  // Check for missing fields
+  if (!name && !email && !password) {
+    errors.push({
+      message: 'Please update at least ONE field below!'
+    });
+  }
+
+  // Page will be re-rendered if validation fails
+  if (errors.length > 0) {
+    res.render('update', {errors});
+  }
+
+  // Check for completed fields
+  if (name !== '' && email !== '' && password !== '') {
+    return User.findOne({name: req.user.name}, (err, user) => {
+      if (!err) {
+        // Update fields of returned user
+        req.user.name = name;
+        req.user.email = email;
+        req.user.password = password;
+
+        // Save new user
+        user.save()
+        .then(user => {
+          success.push({
+            message: 'Yur details have been updated!'
+          });
+          return res.render('update', {success, name, email});
+        });
+      } else {
+        errors.push({
+          message: 'An error occurred, please try again!'
+        });
+        res.render('update', {errors});
+      }
+    });
+  }
 });
 
 const port = process.env.PORT;
