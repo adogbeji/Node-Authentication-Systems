@@ -270,7 +270,7 @@ const updateAccountDetails = (req, res) => {
 }
 
   // Check for Name & Password - WORKS!
-  if (name !== "" && password !== "") {
+  if (name !== '' && password !== '') {
     return User.findOne({name: req.user.name}, (err, user) => {
       if (!err) {
         // Update fields of returned user
@@ -287,23 +287,23 @@ const updateAccountDetails = (req, res) => {
         user.save()
         .then(user => {
           success.push({
-            message: "Name and Password have been updated!"
+            message: 'Name and Password have been updated!'
           });
-          return res.render("update", {success, name});
+          return res.render('update', {success, name});
         });
       });
     });
       } else {
         errors.push({
-          message: "An error occurred, please try again!"
+          message: 'An error occurred, please try again!'
         });
-        res.render("update", {errors});
+        res.render('update', {errors});
       }
     });
   }
 
   // Check for Password & Email - WORKS!
-  if (email !== "" && password !== "") {
+  if (email !== '' && password !== '') {
     return User.findOne({name: req.user.name}, (err, user) => {
       if (!err) {
         // Update fields of returned user
@@ -320,23 +320,23 @@ const updateAccountDetails = (req, res) => {
         user.save()
         .then(user => {
           success.push({
-            message: "Email and Password have been updated!"
+            message: 'Email and Password have been updated!'
           });
-          return res.render("update", {success, email});
+          return res.render('update', {success, email});
         });
       });
     });
       } else {
         errors.push({
-          message: "An error occurred, please try again!"
+          message: 'An error occurred, please try again!'
         });
-        res.render("update", {errors});
+        res.render('update', {errors});
       }
     });
   }
 
   // Check for Name - WORKS!
-  if (name !== "") {
+  if (name !== '') {
     return User.findOne({name: req.user.name}, (err, user) => {
       if (!err) {
         // Update fields of returned user
@@ -346,22 +346,22 @@ const updateAccountDetails = (req, res) => {
         user.save()
         .then(user => {
           success.push({
-            message: "Your Name has been updated!"
+            message: 'Your Name has been updated!'
           });
-          return res.render("update", {success, name});
+          return res.render('update', {success, name});
         });
       } else {
         errors.push({
-          message: "An error occurred, please try again!"
+          message: 'An error occurred, please try again!'
         });
-        res.render("update", {errors});
+        res.render('update', {errors});
       }
     });
   }
 
 
   // Check for Email - WORKS!
-  if (email !== "") {
+  if (email !== '') {
     return User.findOne({name: req.user.name}, (err, user) => {
       if (!err) {
         // Update fields of returned user
@@ -371,21 +371,21 @@ const updateAccountDetails = (req, res) => {
         user.save()
         .then(user => {
           success.push({
-            message: "Your Email has been updated!"
+            message: 'Your Email has been updated!'
           });
-          return res.render("update", {success, email});
+          return res.render('update', {success, email});
         });
       } else {
         errors.push({
-          message: "An error occurred, please try again!"
+          message: 'An error occurred, please try again!'
         });
-        res.render("update", {errors});
+        res.render('update', {errors});
       }
     });
   }
 
   // Check for Password - WORKS!
-  if (password !== "") {
+  if (password !== '') {
     return User.findOne({name: req.user.name}, (err, user) => {
       if (!err) {
         // Update fields of returned user
@@ -401,17 +401,17 @@ const updateAccountDetails = (req, res) => {
         user.save()
         .then(user => {
           success.push({
-            message: "Your Password has been updated!"
+            message: 'Your Password has been updated!'
           });
-          return res.render("update", {success});
+          return res.render('update', {success});
         });
       });
     });
       } else {
         errors.push({
-          message: "An error occurred, please try again!"
+          message: 'An error occurred, please try again!'
         });
-        res.render("update", {errors});
+        res.render('update', {errors});
       }
     });
   }
