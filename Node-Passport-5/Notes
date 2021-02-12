@@ -1,0 +1,21 @@
+Important Points:-
+
+1) If building an application with a Front-End (eg React, Vue), then entry point should be 'server.js'
+2) But for a complete, backend, server-side rendered application, then entry point should be 'app.js'
+3) The 'connect-mongo' package allows us to store our sessions in our database.
+   This prevents us from getting logged out when we restart the server!
+
+4) The 'express-session' package is for sessions and cookies
+5) 'express-handlebars' will be used as a view engine, but you can use others too (eg. EJS).
+   You can even put JSON and use React/Vue etc ??
+
+6) By default, you can only make GET & POST requests from your templates.
+   The 'method-override' package will allow us to make PUT & DELETE requests from our templates too!
+
+7) The 'moment' package is used to format dates
+8) The 'passport-google-oauth20' package is for authentication via Google
+9) Dev dependencies installed are: nodemon, cross-env
+10) The 'cross-env' package allows us to have a global/environment variable inside our start and dev scripts for our Node environment.
+    This differs depending on your operating system (Windows, Mac, Linux)
+
+Pick up tutorial from 9:33
