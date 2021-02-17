@@ -18,4 +18,6 @@ Important Points:-
 10) The 'cross-env' package allows us to have a global/environment variable inside our start and dev scripts for our Node environment.
     This differs depending on your operating system (Windows, Mac, Linux)
 
-Pick up tutorial from 9:33
+11) The start script is what we'll be using in production and we set NODE_ENV=production
+
+Pick up tutorial from 13:31
