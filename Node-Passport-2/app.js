@@ -14,6 +14,23 @@ app.use(express.static(`${__dirname}/public`));
 app.use('/account', express.static(`${__dirname}/public`));
 app.use('/account/details', express.static(`${__dirname}/public`));
 
+// DB Config
+const DB = require('./config/keys').MongoURI;
+
+mongoose.connect(DB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+})
+.then(() => {
+  console.log('MongoDB Connected!');
+})
+.catch(err => {
+  console.log(err);
+});
+
+
+const User = require('./models/user-model');
 
 const port = process.env.PORT;
 
