@@ -61,6 +61,11 @@ mongoose.connect(DB, {
 
 const User = require('./models/user-model');
 
+app.get('/', (req, res) => {
+  res.render('home');
+});
+
+
 const port = process.env.PORT;
 
 // For Next Time: Start making partials in 'messages.ejs' & building web pages
