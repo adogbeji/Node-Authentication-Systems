@@ -65,6 +65,14 @@ app.get('/', (req, res) => {
   res.render('home');
 });
 
+app.get('/account/register', (req, res) => {
+  res.render('register');
+});
+
+app.get('/account/login', (req, res) => {
+  res.render('login');
+});
+
 
 const port = process.env.PORT;
 
