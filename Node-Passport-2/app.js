@@ -65,6 +65,10 @@ app.get('/', (req, res) => {
   res.render('home');
 });
 
+app.get('/account', (req, res) => {  // Put in Account Page: <%= name %>
+  res.render('account');
+});
+
 app.get('/account/register', (req, res) => {
   res.render('register');
 });
@@ -73,10 +77,18 @@ app.get('/account/login', (req, res) => {
   res.render('login');
 });
 
+app.get('/account/details', (req, res) => {
+  res.render('update');
+});
+
+app.get('/account/details/login', (req, res) => {
+  res.render('update-login');
+});
+
 
 const port = process.env.PORT;
 
-// For Next Time: Start making partials in 'messages.ejs' & building web pages
+// For Next Time: Build 'logout' & 'delete' routes, then start building POST routes!
 
 app.listen(port, (req, res) => {
   console.log(`Listening on port ${port}...`);
