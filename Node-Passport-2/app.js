@@ -85,10 +85,33 @@ app.get('/account/details/login', (req, res) => {
   res.render('update-login');
 });
 
+app.get('/account/logout', (req, res) => {
+  req.logout();
+  req.flash('success_msg', 'You are now logged out!');
+  res.redirect('/account/login');
+});
+
+app.get('/account/delete', (req, res) => {
+  let errors = [];  // Array of error message objects
+
+  User.deleteOne({name: req.user.name})
+  .then(noAccount => {
+    if (noAccount) {
+      req.flash('success_msg', 'Your account has now been closed!');
+      res.redirect('/account/register');
+    }
+  })
+  .catch(err => {
+    errors.push({
+      message: 'An error occurred, please try again!'
+    });
+  });
+});
+
 
 const port = process.env.PORT;
 
-// For Next Time: Build 'logout' & 'delete' routes, then start building POST routes!
+// For Next Time: Start building POST routes!
 
 app.listen(port, (req, res) => {
   console.log(`Listening on port ${port}...`);
